@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 
 FEEDS_DIR = "feeds"
-OUTPUT_DIR = "output"
+OUTPUT_DIR = "docs"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def safe_slug(text):
