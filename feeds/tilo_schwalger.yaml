@@ -1,0 +1,18 @@
+# Name of the site (used in the feed)
+site_name: "Tilo Schwalger"
+# URL to fetch
+url: "https://page.math.tu-berlin.de/~schwalge/"
+# CSS selector that identifies each entry/article block
+item_selector: "tr"
+
+# Within each item, CSS selectors for the fields
+fields:
+  title: "a.news-title"
+  subtitle: "th.row"
+  description: ""
+  link: "a.news-title"          # href attribute of this element will be used
+  picture: ""         # will read the `src` attribute
+
+# Optional: prefix to prepend if links are relative
+link_prefix: "https://page.math.tu-berlin.de/"
+
