@@ -1,0 +1,17 @@
+# Name of the site (used in the feed)
+site_name: "Flatiron Institute"
+# URL to fetch
+url: "https://www.simonsfoundation.org/flatiron/careers/?tab=job-openings"
+# CSS selector that identifies each entry/article block
+item_selector: "div.mvd-375_mvm-3.pt-18.bt-black--15"
+
+# Within each item, CSS selectors for the fields
+fields:
+  title: "div.news-title"
+  subtitle: "div.color__black--54.font-09"
+  description: "div.s-grid__three-quarts.font-09-medium"
+  link: "a"          # href attribute of this element will be used
+
+# Optional: prefix to prepend if links are relative
+link_prefix: ""
+
