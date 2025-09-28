@@ -11,6 +11,7 @@ fields:
   subtitle: "div.color__black--54.font-09"
   description: "div.s-grid__three-quarts.font-09-medium"
   link: "a"          # href attribute of this element will be used
+  picture: ""         # will read the `src` attribute
 
 # Optional: prefix to prepend if links are relative
 link_prefix: ""
