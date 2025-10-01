@@ -1,4 +1,5 @@
 #!/bin/bash
+sleep 5
 eval "$(conda shell.bash hook)"
 conda activate
 cd $HOME/myrssfeeds
