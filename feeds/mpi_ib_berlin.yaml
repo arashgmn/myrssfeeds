@@ -1,7 +1,7 @@
 # feeds/mpiib_jobs.yaml
-site_name: "MPI Tubingen"
-url: "https://www.tuebingen.mpg.de/174474/stellenangebote"
-description: "MPI Tubingen"
+site_name: "MPI Infection Biology (Berlin)"
+url: "https://www.mpiib-berlin.mpg.de/career/job_board"
+description: "MPI Infection Biology"
 language: "en"
 
 item_selector: "li.teaser.teaser-horizontal"   # adjust if the HTML structure differs
@@ -13,5 +13,5 @@ fields:
   link: "a"                            # link to the job details (href)
   picture: ""                          # there may be no separate image
 
-link_prefix: "https://www.tuebingen.mpg.de"
+link_prefix: "https://www.mpiib-berlin.mpg.de"
 
