@@ -1,7 +1,7 @@
 # feeds/mpiib_jobs.yaml
-site_name: "MPI Biological Cybernetics Tubingen"
+site_name: "MPI-BC"
 url: "https://www.tuebingen.mpg.de/174474/stellenangebote"
-description: "MPI-BC-Tubingen"
+description: "MPI Biological Cybernetics Tubingen"
 language: "en"
 
 item_selector: "li.teaser.teaser-horizontal"   # adjust if the HTML structure differs
