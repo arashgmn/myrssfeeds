@@ -1,7 +1,7 @@
 # feeds/mpiib_jobs.yaml
 site_name: "MPI Infection Biology (Berlin)"
 url: "https://www.mpiib-berlin.mpg.de/career/job_board"
-description: "MPI Infection Biology"
+description: "MPI-IB"
 language: "en"
 
 item_selector: "li.teaser.teaser-horizontal"   # adjust if the HTML structure differs
