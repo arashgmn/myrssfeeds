@@ -141,8 +141,8 @@ def scrape_site_from_cfg(cfg, fname_for_fallback):
 
             item = {
                 "title": safe_text(fields.get("title", "")),
-                "subtitle": safe_text(fields.get("subtitle", "")),
-                "description": safe_text(fields.get("description", "")),
+                "subtitle": fields.get("subtitle_is", "") + safe_text(fields.get("subtitle", "")),
+                "description": fields.get("description_is", "") + safe_text(fields.get("description", "")),
                 "link": safe_link(fields.get("link", "")),
                 "picture": safe_image(fields.get("picture", "")),
             }

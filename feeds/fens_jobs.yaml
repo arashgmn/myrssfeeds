@@ -5,8 +5,9 @@ item_selector: "table.table tbody tr"
 
 fields:
   title: "td:nth-of-type(2) a"
-  subtitle: "td:nth-of-type(3) a"
-  description: "td:nth-of-type(4)"
+  subtitle: "td:nth-of-type(4)"
+  description: "td:nth-of-type(7)"
+  description_is: "Deadline " 
   link: "td:nth-of-type(2) a"
   picture: ""
 
