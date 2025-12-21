@@ -1,0 +1,17 @@
+# feeds/mpiib_jobs.yaml
+site_name: "LMU"
+url: "https://www.lmu.de/en/about-lmu/working-at-lmu/job-portal/academic-staff/"
+description: "LMU academic staff (en)"
+language: "en"
+
+item_selector: "header"   # adjust if the HTML structure differs
+
+fields:
+  title: # "bite-jobs-list--title"       # the link text of each job listing
+  subtitle: #"bite-jobs-list--bewerbungsfrist"                         # no separate subtitle
+  description: #"bite-jobs-list--fakultaet"                     # the paragraph text under each listing
+  link: "a"                            # link to the job details (href)
+  picture: ""                          # there may be no separate image
+
+link_prefix: "https://www.lmu.de"
+
