@@ -215,7 +215,8 @@ def main():
         except Exception as e:
             print(f"Skipping {fname}: failed to parse YAML: {e}")
             continue
-
+        
+        # print('filename:', fname)
         site_name, entries = scrape_site_from_cfg(cfg, os.path.splitext(fname)[0])
         build_and_write_feed(site_name, cfg, entries)
 
