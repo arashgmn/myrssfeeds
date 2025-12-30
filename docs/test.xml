@@ -3,50 +3,50 @@
   <channel>
     <title>FENS jobs</title>
     <link>https://www.fens.org/careers/job-market?sort=closing_date&amp;direction=ASC&amp;keywords=&amp;country=89&amp;position=4</link>
-    <description>subtitle</description>
+    <description>Job postings feed</description>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
-    <image>
-      <url>image</url>
-      <title>FENS jobs</title>
-      <link>https://www.fens.org/careers/job-market?sort=closing_date&amp;direction=ASC&amp;keywords=&amp;country=89&amp;position=4</link>
-    </image>
     <language>en</language>
-    <lastBuildDate>Tue, 30 Dec 2025 00:05:55 +0000</lastBuildDate>
-    <item>
-      <title>PostDoc</title>
-      <link>https://www.fens.org/careers/job-market/job/124348/</link>
-      <description>European Neuroscience Institute</description>
-      <comments>Göttingen-Germany</comments>
-      <pubDate>Tue, 30 Dec 2025 00:05:55 +0000</pubDate>
-    </item>
-    <item>
-      <title>Postdoctoral Researcher – Molecular and cellular basis of behavior (m/f/d)</title>
-      <link>https://www.fens.org/careers/job-market/job/125358/</link>
-      <description>Max Delbrück Center for Molecular Medicine</description>
-      <comments>Berlin-Germany</comments>
-      <pubDate>Tue, 30 Dec 2025 00:05:55 +0000</pubDate>
-    </item>
-    <item>
-      <title>Research Associate (f/m/d) fixed-term</title>
-      <link>https://www.fens.org/careers/job-market/job/124864/</link>
-      <description>Albert-Ludwigs-Universitaet Freiburg, Faculty of Biology</description>
-      <comments>Freiburg-Germany</comments>
-      <pubDate>Tue, 30 Dec 2025 00:05:55 +0000</pubDate>
-    </item>
+    <lastBuildDate>Tue, 30 Dec 2025 00:58:12 +0000</lastBuildDate>
     <item>
       <title>Postdoctoral researcher: Neuronal Dynamics underlying Auditory Perception.</title>
       <link>https://www.fens.org/careers/job-market/job/123402/</link>
-      <description>University Medical Center of the Johannes Gutenberg University Mainz</description>
-      <comments>Mainz-Germany</comments>
-      <pubDate>Tue, 30 Dec 2025 00:05:55 +0000</pubDate>
+      <description>Mainz (Deadline: 2026-01-31)
+
+University Medical Center of the Johannes Gutenberg University Mainz</description>
+      <pubDate>Thu, 03 Jul 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>PostDoc</title>
+      <link>https://www.fens.org/careers/job-market/job/124348/</link>
+      <description>Göttingen (Deadline: 2026-11-01)
+
+European Neuroscience Institute</description>
+      <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Post-doctoral research position</title>
       <link>https://www.fens.org/careers/job-market/job/124613/</link>
-      <description>University of Freiburg</description>
-      <comments>Freiburg-Germany</comments>
-      <pubDate>Tue, 30 Dec 2025 00:05:55 +0000</pubDate>
+      <description>Freiburg (Deadline: 2025-12-31)
+
+University of Freiburg</description>
+      <pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Research Associate (f/m/d) fixed-term</title>
+      <link>https://www.fens.org/careers/job-market/job/124864/</link>
+      <description>Freiburg (Deadline: 2026-01-31)
+
+Albert-Ludwigs-Universitaet Freiburg, Faculty of Biology</description>
+      <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Postdoctoral Researcher – Molecular and cellular basis of behavior (m/f/d)</title>
+      <link>https://www.fens.org/careers/job-market/job/125358/</link>
+      <description>Berlin (Deadline: 2026-01-31)
+
+Max Delbrück Center for Molecular Medicine</description>
+      <pubDate>Mon, 15 Dec 2025 00:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>
