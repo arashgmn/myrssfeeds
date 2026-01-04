@@ -10,11 +10,20 @@ import os
 import re
 from datetime import datetime, timezone
 from urllib.parse import urljoin
+import time
+
+import warnings
+warnings.filterwarnings("ignore")
 
 import yaml
 import requests
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 FEEDS_DIR = "feeds"
 OUTPUT_DIR = "docs"
@@ -26,13 +35,100 @@ def safe_slug(text):
     s = re.sub(r"[^\w\-\.]+", "_", text.strip())
     return s[:120] or "site"
 
+# def is_dynamic_site(url):
+#     """
+#     Optional check: You can expand this list with domains 
+#     known to require heavy JS execution.
+#     """
+#     dynamic_indicators = ["lmu.de", "react", "angular", "vue"]
+#     return any(indicator in url.lower() for indicator in dynamic_indicators)
+
+
+# def fetch_html(url, timeout=20):
+#     # 1. Quick attempt with requests (standard headers)
+#     try:
+#         headers = {
+#             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+#             "Accept-Language": "en-US,en;q=0.9",
+#         }
+#         r = requests.get(url, timeout=timeout//2, headers=headers)
+#         r.raise_for_status()
+#         # If the page returns a significant amount of HTML, assume it worked
+#         if len(r.text) > 5000: 
+#             return r.text
+#     except Exception as e:
+#         print(f"  [Static fetch skipped/failed] {url}")
+
+#     # 2. Universal Stealth Fallback with Selenium
+#     try:
+#         chrome_options = Options()
+#         # Use the modern headless engine
+#         chrome_options.add_argument("--headless=new")
+#         chrome_options.add_argument("--no-sandbox")
+#         chrome_options.add_argument("--disable-dev-shm-usage")
+        
+#         # --- GLOBAL STEALTH FLAGS ---
+#         # Masks the 'navigator.webdriver' flag and prevents detection
+#         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+#         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+#         chrome_options.add_experimental_option('useAutomationExtension', False)
+        
+#         # Set a real-world User Agent
+#         chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
+
+#         # Optimization: Don't wait for images/ads to load
+#         chrome_options.page_load_strategy = 'eager'
+
+#         driver = webdriver.Chrome(options=chrome_options)
+#         driver.set_page_load_timeout(timeout)
+
+#         try:
+#             driver.get(url)
+#             # Universal wait: Wait until the body is present AND 
+#             # give JS a tiny window (2s) to execute its primary render.
+#             WebDriverWait(driver, timeout).until(
+#                 EC.presence_of_element_located((By.TAG_NAME, "body"))
+#             )
+#             import time
+#             time.sleep(2) # Brief pause for AJAX/Table injection
+#         except Exception:
+#             # If it times out, we still proceed to grab what's currently in the DOM
+#             pass
+
+#         html = driver.page_source
+#         driver.quit()
+#         return html
+
+#     except Exception as e:
+#         print(f"  [Selenium Error] {url}: {e}")
+#         if 'driver' in locals():
+#             driver.quit()
+#         return None
+    
 def fetch_html(url, timeout=20):
+    # Try requests first for faster static pages
     try:
-        r = requests.get(url, timeout=timeout)
+        r = requests.get(url, timeout=timeout, verify = False, )
         r.raise_for_status()
         return r.text
     except Exception as e:
-        print(f"  [fetch error] {url}: {e}")
+        print(f"  [fetch error with requests] {url}: {e}")
+    
+    # Fallback to Selenium for JavaScript-heavy pages
+    try:
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.set_page_load_timeout(timeout)
+        driver.get(url)
+        WebDriverWait(driver, timeout).until(EC.presence_of_all_elements_located((By.TAG_NAME, "body")))
+        html = driver.page_source
+        driver.quit()
+        return html
+    except Exception as e:
+        print(f"  [fetch error with Selenium] {url}: {e}")
         return None
 
 def pick_image_src(element):
