@@ -1,0 +1,15 @@
+[project]
+name = "myrssfeeds"
+version = "0.1.0"
+description = "Generate RSS feeds from scraped sites"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "feedgen>=1.0",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "selenium>=4.16",
+]
+
+[tool.uv]
+package = false

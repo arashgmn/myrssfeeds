@@ -1,17 +1,16 @@
-# feeds/mpiib_jobs.yaml
 site_name: "MPG-all"
-url: "https://www.mpg.de/jobboard?job_type%5B%5D=sc"
-description: "Maax-Planck-Gesellschaft (all)"
+url: "https://www.mpg.de/jobboard?job_type%5B%5D=sc&job_type%5B%5D=assist&job_type%5B%5D=sc_jun"
+description: "Max Planck Society job offers"
 language: "en"
 
-item_selector: "li.teaser.teaser-horizontal"   # adjust if the HTML structure differs
+item_selector: "ul#show_more-jobs > li.teaser.teaser-horizontal"
 
 fields:
-  title: "a"                           # the link text of each job listing
-  subtitle: ""                         # no separate subtitle
-  description: "p"                     # the paragraph text under each listing
-  link: "a"                            # link to the job details (href)
-  picture: ""                          # there may be no separate image
+  title: "h3 a"
+  subtitle: "span.date"
+  description: ".meta-information + div"
+  description_is: "Institution: "
+  link: "h3 a"
+  picture: ""
 
 link_prefix: "https://www.mpg.de"
-

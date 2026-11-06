@@ -1,0 +1,17 @@
+site_name: "DZNE jobs"
+# The jobs page is an Angular widget; its data is already published as RSS.
+url: "https://jobs.dzne.de/jobPublication/list.rss"
+description: "DZNE job offers"
+language: "en"
+
+source_format: "rss"
+
+# Not used for source_format: rss, kept for the config contract/validator.
+item_selector: "item"
+
+fields:
+  title: "title"
+  subtitle: ""
+  description: "description"
+  link: "link"
+  picture: ""
