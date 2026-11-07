@@ -1,0 +1,20 @@
+site_name: "TU Berlin PostDocs"
+# The job list already publishes an Atom feed; use it instead of scraping HTML.
+url: "https://www.jobs.tu-berlin.de/en/job-postings.atom?filter%5Bworktype_tub%5D%5B%5D=wiss-pdoc"
+description: "TU Berlin postdoctoral job postings"
+language: "en"
+
+source_format: "rss"
+
+# Not used for source_format: rss, kept for the config contract/validator.
+item_selector: "entry"
+
+fields:
+  title: "title"
+  subtitle: ""
+  description: "summary"
+  link: "link"
+  picture: ""
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

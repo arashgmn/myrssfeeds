@@ -1,0 +1,20 @@
+site_name: "Heidelberg University Hospital jobs"
+# Postdoc search on the UKHD careers portal. The result table is rendered by
+# JavaScript, so the scraper falls back to Selenium.
+url: "https://karriere.klinikum.uni-heidelberg.de/index.php?ac=search_result&search_criterion_keyword%5B%5D=postdoc&search_criterion_channel%5B%5D=12&btn_dosearch="
+description: "Stellenanzeigen Universitätsklinikum Heidelberg"
+language: "de"
+
+item_selector: "table.jb-datatable tbody.jb-dt-list-body tr"
+
+fields:
+  title: "td.column-jobad-title a"
+  subtitle: "td.organization-name"
+  description: "td.job-category"
+  link: "td.column-jobad-title a"
+  picture: ""
+
+link_prefix: "https://karriere.klinikum.uni-heidelberg.de/"
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

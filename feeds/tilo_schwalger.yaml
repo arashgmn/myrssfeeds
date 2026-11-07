@@ -16,3 +16,6 @@ fields:
 # Optional: prefix to prepend if links are relative
 link_prefix: "https://page.math.tu-berlin.de/"
 
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

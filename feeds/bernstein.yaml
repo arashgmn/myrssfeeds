@@ -1,0 +1,19 @@
+site_name: "Bernstein Postdocs"
+url: "https://bernstein-network.de/en/career/job-pool/"
+description: "Bernstein Network computational neuroscience postdoc positions"
+language: "en"
+
+# Only the #postdocs section of the job pool.
+item_selector: "h2#postdocs + div div.stelle-uebersicht"
+
+fields:
+  title: "h4 a"
+  subtitle: "div.stelle-ort"
+  description: "div.stelle-institution"
+  link: "h4 a"
+  picture: ""
+
+link_prefix: ""
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

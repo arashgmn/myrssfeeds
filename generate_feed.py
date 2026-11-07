@@ -20,6 +20,8 @@ import requests
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 
+from filters import compile_filter
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FEEDS_DIR = os.path.join(BASE_DIR, "feeds")
 OUTPUT_DIR = os.path.join(BASE_DIR, "docs")
@@ -109,9 +111,39 @@ def safe_slug(text):
 #             driver.quit()
 #         return None
     
-def fetch_html(url, timeout=20, allow_selenium=True):
+def fetch_with_legacy_tls(url, timeout=20):
+    """Retry with a relaxed cipher list for old servers (e.g. Oracle 10g)."""
+    try:
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.ssl_ import create_urllib3_context
+    except ImportError:
+        return None
+
+    class _Adapter(HTTPAdapter):
+        def init_poolmanager(self, *args, **kwargs):
+            context = create_urllib3_context()
+            # Old appliances may reject modern handshake defaults. Certificate
+            # verification stays on; only the cipher security level is relaxed.
+            context.set_ciphers("DEFAULT:@SECLEVEL=0")
+            kwargs["ssl_context"] = context
+            return super().init_poolmanager(*args, **kwargs)
+
+    session = requests.Session()
+    session.mount("https://", _Adapter())
+    try:
+        response = session.get(url, timeout=timeout, headers=HEADERS)
+        response.raise_for_status()
+        return response.content
+    except Exception as e:
+        print(f"  [fetch error with legacy TLS] {url}: {e}")
+        return None
+    finally:
+        session.close()
+
+def fetch_html(url, timeout=20, allow_selenium=True, wait_for=None):
     # Try requests first for faster static pages. Retry once so a transient
     # DNS/network blip does not silently drop a feed from the run.
+    last_error = None
     for attempt in range(2):
         try:
             r = requests.get(url, timeout=timeout, headers=HEADERS)
@@ -120,9 +152,15 @@ def fetch_html(url, timeout=20, allow_selenium=True):
             # instead of requests defaulting to ISO-8859-1 when charset is absent.
             return r.content
         except Exception as e:
+            last_error = e
             print(f"  [fetch error with requests] {url}: {e}")
             if attempt == 0:
                 time.sleep(2)
+
+    if isinstance(last_error, requests.exceptions.SSLError):
+        raw = fetch_with_legacy_tls(url, timeout)
+        if raw is not None:
+            return raw
 
     if not allow_selenium:
         return None
@@ -148,6 +186,11 @@ def fetch_html(url, timeout=20, allow_selenium=True):
         driver.set_page_load_timeout(timeout)
         driver.get(url)
         WebDriverWait(driver, timeout).until(EC.presence_of_all_elements_located((By.TAG_NAME, "body")))
+        if wait_for:
+            # JS-rendered listings arrive after the body; wait for the first item.
+            WebDriverWait(driver, timeout).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, wait_for))
+            )
         return driver.page_source
     except Exception as e:
         print(f"  [fetch error with Selenium] {url}: {e}")
@@ -234,6 +277,15 @@ def scrape_rss(url):
     entries.reverse()
     return entries
 
+def apply_filter(cfg, entries):
+    """Keep entries whose title matches the YAML `filter` expression."""
+    expression = cfg.get("filter")
+    if not isinstance(expression, str) or not expression.strip():
+        return entries
+    predicate = compile_filter(expression)
+    return [e for e in entries if predicate(e.get("title") or "")]
+
+
 def scrape_site_from_cfg(cfg, fname_for_fallback):
     # defensively read config values
     site_name = (cfg.get("site_name") or "").strip() or safe_slug(fname_for_fallback)
@@ -243,7 +295,7 @@ def scrape_site_from_cfg(cfg, fname_for_fallback):
         return site_name, []
 
     if (cfg.get("source_format") or "").strip().lower() == "rss":
-        return site_name, scrape_rss(url)
+        return site_name, apply_filter(cfg, scrape_rss(url))
 
     item_selector = (cfg.get("item_selector") or "").strip()
     if not item_selector:
@@ -255,7 +307,7 @@ def scrape_site_from_cfg(cfg, fname_for_fallback):
         fields = {}
     link_prefix = (cfg.get("link_prefix") or "").strip() or None
 
-    html = fetch_html(url)
+    html = fetch_html(url, wait_for=item_selector)
     if not html:
         return site_name, []
 
@@ -359,7 +411,7 @@ def scrape_site_from_cfg(cfg, fname_for_fallback):
 
     # Keep the same approach as before: reverse so first-detected becomes first in feed
     entries.reverse()
-    return site_name, entries
+    return site_name, apply_filter(cfg, entries)
 
 def load_old_pubdates(out_path):
     """Map existing guid/link -> pubDate so re-runs keep stable dates."""

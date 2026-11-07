@@ -1,0 +1,18 @@
+site_name: "Heidelberg jobs"
+url: "https://adb.zuv.uni-heidelberg.de/info/INFO_LS$.Startup"
+description: "Stellenausschreibungen der Universität Heidelberg"
+language: "de"
+
+item_selector: "#content table tr"
+
+fields:
+  title: "td:nth-of-type(1) b a"
+  subtitle: "td:nth-of-type(2)"
+  description: "td:nth-of-type(3)"
+  link: "td:nth-of-type(1) b a"
+  picture: ""
+
+link_prefix: "https://adb.zuv.uni-heidelberg.de/info/"
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

@@ -14,3 +14,6 @@ fields:
   picture: ""
 
 link_prefix: "https://www.mpg.de"
+
+# Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
+filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"

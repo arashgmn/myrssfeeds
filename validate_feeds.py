@@ -10,6 +10,7 @@ from urllib.parse import urlsplit
 
 import yaml
 
+from filters import compile_filter
 from generate_feed import safe_slug
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -195,6 +196,16 @@ def load_configs(feeds_dir):
             config["expected_url"] = url.strip()
         if not _nonempty_str(item_selector):
             config["errors"].append("missing/non-empty 'item_selector' string")
+
+        filter_expr = cfg.get("filter")
+        if filter_expr is not None:
+            if not isinstance(filter_expr, str):
+                config["errors"].append("'filter' must be a string")
+            else:
+                try:
+                    compile_filter(filter_expr)
+                except Exception as exc:
+                    config["errors"].append(f"invalid 'filter': {_one_line(exc)}")
 
         raw_site_name = cfg.get("site_name")
         site_name = raw_site_name.strip() if isinstance(raw_site_name, str) else ""
