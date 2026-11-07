@@ -140,11 +140,11 @@ def fetch_with_legacy_tls(url, timeout=20):
     finally:
         session.close()
 
-def fetch_html(url, timeout=20, allow_selenium=True, wait_for=None):
+def fetch_html(url, timeout=20, allow_selenium=True, wait_for=None, force_selenium=False):
     # Try requests first for faster static pages. Retry once so a transient
     # DNS/network blip does not silently drop a feed from the run.
     last_error = None
-    for attempt in range(2):
+    for attempt in range(0 if force_selenium else 2):
         try:
             r = requests.get(url, timeout=timeout, headers=HEADERS)
             r.raise_for_status()
@@ -307,7 +307,11 @@ def scrape_site_from_cfg(cfg, fname_for_fallback):
         fields = {}
     link_prefix = (cfg.get("link_prefix") or "").strip() or None
 
-    html = fetch_html(url, wait_for=item_selector)
+    html = fetch_html(
+        url,
+        wait_for=item_selector,
+        force_selenium=bool(cfg.get("render_js")),
+    )
     if not html:
         return site_name, []
 

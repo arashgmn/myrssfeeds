@@ -1,20 +1,22 @@
-# feeds/mpiib_jobs.yaml
-site_name: "LMU"
+site_name: "LMU academic staff"
 url: "https://www.lmu.de/en/about-lmu/working-at-lmu/job-portal/academic-staff/"
-description: "LMU academic staff (en)"
+description: "LMU academic staff vacancies (en)"
 language: "en"
 
-item_selector: "header"   # adjust if the HTML structure differs
+# The listing is injected by the b-ite jobs widget, so render it in a browser.
+render_js: true
+
+item_selector: "table.bite-jobs-list tr.bite-jobs-list--row"
 
 fields:
-  title: # "bite-jobs-list--title"       # the link text of each job listing
-  subtitle: #"bite-jobs-list--bewerbungsfrist"                         # no separate subtitle
-  description: #"bite-jobs-list--fakultaet"                     # the paragraph text under each listing
-  link: "a"                            # link to the job details (href)
-  picture: ""                          # there may be no separate image
+  title: "td.bite-jobs-list--title"
+  subtitle: "td.bite-jobs-list--fakultaet"
+  description: "td.bite-jobs-list--verguetung"
+  # The widget exposes no per-job URL; entries fall back to the listing page.
+  link: ""
+  picture: ""
 
 link_prefix: "https://www.lmu.de"
-
 
 # Keyword filter: AND/OR/NOT + parentheses; empty = keep every entry.
 filter: "(NOT (hiwi OR hi-wi)) AND (postdoc OR post-doc OR postdoctorate OR postdoctoral)"
